@@ -10,6 +10,8 @@ type balc struct {
 }
 
 type Balc interface {
+	Loan(amount int, description string, customerId int) (string, error)
+	LimitCheck(customerId int) (LimitResponse, error)
 }
 
 func New(endpoint, token string) Balc {
@@ -19,7 +21,7 @@ func New(endpoint, token string) Balc {
 	}
 }
 
-func (b *balc) Loan(amount int, description string, customerId int) (Response, error) {
+func (b *balc) Loan(amount int, description string, customerId int) (string, error) {
 	var body []interface{}
 	body = append(body, PayRequest{
 		Amt:         amount,
@@ -27,21 +29,21 @@ func (b *balc) Loan(amount int, description string, customerId int) (Response, e
 	})
 	res, err := b.httpRequest(body, BalcLoan, customerId)
 	if err != nil {
-		return Response{}, err
+		return "", err
 	}
-	var response Response
+	var response string
 	json.Unmarshal(res, &response)
 
 	return response, nil
 }
 
-func (b *balc) LimitCheck(customerId int) (Response, error) {
+func (b *balc) LimitCheck(customerId int) (LimitResponse, error) {
 	var body []interface{} // empty array
 	res, err := b.httpRequest(body, BalcLimit, customerId)
 	if err != nil {
-		return Response{}, err
+		return LimitResponse{}, err
 	}
-	var response Response
+	var response LimitResponse
 	json.Unmarshal(res, &response)
 
 	return response, nil

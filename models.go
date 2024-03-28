@@ -2,11 +2,13 @@ package balcapi
 
 type (
 	PayRequest struct {
-		Amt         int    `json:"amt"`
-		Description string `json:"description"`
+		Amt         int    `json:"amt"`         // Төлбөрийн дүн
+		Description string `json:"description"` // Төлбөрийн тайлбар
 	}
-	Response struct {
-		Data         interface{} `json:"data"`
-		ErrorMessage string      `json:"errorMessage"`
+	LimitResponse struct {
+		TotalLimit float64 `json:"totalLimit"` // Нийт лимит
+		UsedLimit  float64 `json:"usedLimit"`  // Ашигласан дүн
+		AvailLimit float64 `json:"availLimit"` // БОломжит дүн
+		Status     int     `json:"status"`     // 1 ашиглах боломжтой, 0 боломжгүй
 	}
 )
