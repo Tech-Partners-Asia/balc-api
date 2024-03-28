@@ -2,6 +2,7 @@ package balcapi
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 type balc struct {
@@ -19,6 +20,10 @@ func New(endpoint, token string) Balc {
 		endpoint: endpoint,
 		token:    token,
 	}
+}
+
+func (b *balc) GetWebComponent(customerId int) string {
+	return fmt.Sprintf("%s/?cust_id=%d&access_token=%s", b.endpoint, customerId, b.token)
 }
 
 func (b *balc) Loan(amount int, description string, customerId int) (string, error) {
