@@ -13,6 +13,7 @@ type balc struct {
 type Balc interface {
 	Loan(amount int, description string, customerId int) (string, error)
 	LimitCheck(customerId int) (LimitResponse, error)
+	GetWebComponent(customerId int) string
 }
 
 func New(endpoint, token string) Balc {
