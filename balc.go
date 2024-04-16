@@ -28,7 +28,7 @@ func (b *balc) GetWebComponent(customerId int) string {
 }
 
 func (b *balc) Loan(amount int, description string, customerId int) (string, error) {
-	var body []interface{}
+	var body []PayRequest
 	body = append(body, PayRequest{
 		Amt:         amount,
 		Description: description,
