@@ -44,7 +44,9 @@ func (b *balc) httpRequest(body interface{}, api utils.API, customerId int) (res
 
 	res, err := http.DefaultClient.Do(req)
 	if res.StatusCode != 200 {
-		return nil, errors.New(string(res.Status))
+		response, _ = io.ReadAll(res.Body)
+		errorString := string(response[:])
+		return nil, errors.New(string(errorString))
 	}
 	defer res.Body.Close()
 	response, _ = io.ReadAll(res.Body)
